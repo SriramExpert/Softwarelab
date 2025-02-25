@@ -1,0 +1,57 @@
+package selenium;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import java.time.Duration;
+
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+
+public class Apple {
+    public static void main(String[] args) throws InterruptedException {
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Sriram\\Selenium Webdriver\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
+
+        // Use User-Agent to prevent bot detection
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
+
+        WebDriver driver = new ChromeDriver(options);
+        driver.manage().window().maximize();
+        driver.get("https://www.linkedin.com/login");
+
+        // Add Explicit Wait
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebElement username = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
+        WebElement password = driver.findElement(By.id("password"));
+
+        // Enter credentials with delay
+        username.sendKeys("8148794421");
+        Thread.sleep(2000); // Mimic typing delay
+        password.sendKeys("velmaniDeepika");
+        Thread.sleep(2000);
+
+        // Locate login button and click
+        WebElement loginButton = driver.findElement(By.xpath("//button[@type='submit']"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();", loginButton);
+
+        // Wait for page load
+        wait.until(ExpectedConditions.urlContains("feed"));
+
+        // Validate login
+        String actualUrl = "https://www.linkedin.com/feed/";
+        String expectedUrl = driver.getCurrentUrl();
+
+        if (actualUrl.equalsIgnoreCase(expectedUrl)) {
+            System.out.println("Test passed");
+        } else {
+            System.out.println("Test failed");
+        }
+
+        // Close Browser
+        driver.quit();
+    }
+}
