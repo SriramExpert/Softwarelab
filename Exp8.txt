@@ -1,0 +1,27 @@
+import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class TestObjects {
+    public static void main(String[] args) {
+        // Set the path to the GeckoDriver executable
+        System.setProperty("webdriver.gecko.driver", "yourLocationToGeckoDriver\\geckodriver.exe");
+
+        // Initialize the WebDriver
+        WebDriver driver = new FirefoxDriver();
+
+        // Open the target webpage
+        driver.get("https://www.gmail.com");
+
+        // Find all elements on the webpage
+        List<WebElement> allElements = driver.findElements(By.xpath("//*"));
+
+        // Print the total number of elements
+        System.out.println("Total number of elements on the page = " + allElements.size());
+
+        // Close the browser
+        driver.quit();
+    }
+}
